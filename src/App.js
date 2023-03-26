@@ -1,24 +1,39 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarComponent from './components/Navbar';
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux'
 import { Container } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import Cancel from './pages/Cancel';
-import Store from './pages/Store';
-import Success from './pages/Success';
-import CartProvider from './CartContext';
-// localhost:3000 -> Home
-// localhost:3000/success -> Success
+import axios from 'axios'
+import './styles/index.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Navbar from './components/Navbar';
+import Cancel from './containers/Cancel';
+import Home from './containers/Home';
+import Success from './containers/Success';
+import CartProvider from '../src/helpers/CartContext';
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    let user = localStorage.getItem('user')
+
+    if (typeof (user) === 'string') {
+      user = JSON.parse(user)
+      axios.defaults.headers.common['authentication'] = user.token
+      dispatch({ type: 'CHANGE_USER', payload: user })
+    }
+  })
+
   return (
     <CartProvider>
       <Container>
-        <NavbarComponent></NavbarComponent>
+        <Navbar />
         <BrowserRouter>
           <Routes>
-            <Route index element={<Store />} />
-            <Route path="success" element={<Success />} />
-            <Route path="cancel" element={<Cancel />} />
+            <Route index element={<Home />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/cancel" element={<Cancel />} />
           </Routes>
         </BrowserRouter>
       </Container>
