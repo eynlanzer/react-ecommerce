@@ -1,0 +1,58 @@
+@import '../../styles/variables.scss';
+
+.button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  box-sizing:border-box;
+
+  svg {
+    margin: 0 4px;
+  }
+  
+  span {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 24px;
+  }
+  
+  span.icon-left {
+    flex-direction: row-reverse;
+  }
+  
+  button {
+    display: none;
+  }
+  
+  &--type-1 {
+    background: $color-primary;
+    color: $color-white;
+    
+    &:hover, &:focus {
+      background: $color-light-primary;
+      color: $color-white;
+    }
+  }
+  
+  &--type-2 {
+    background: $color-white;
+    box-sizing: content-box;
+    color: $color-dark-secondary;
+    
+    &:hover, &:focus {
+      background: $color-gray--50;
+      border: 1px solid $color-gray--50;
+      color: $color-secondary;
+    }
+  }
+}
+
